@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2D Art & Assets — Mickaela Luis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F1F4EC;
+    --paper-dim: #E7ECDF;
+    --ink: #16241C;
+    --forest: #1F4D3B;
+    --moss: #5B8266;
+    --sage: #A8C3A0;
+    --amber: #D9A441;
+    --card: #FFFFFA;
+
+    --display: 'Fraunces', serif;
+    --body: 'Space Grotesk', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  body{
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a{ color: inherit; }
+  img{ max-width:100%; display:block; border-radius: 6px; }
+
+  .wrap{ max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+
+  /* NAV */
+  nav{
+    position: sticky; top:0; z-index: 50;
+    background: rgba(241,244,236,0.88);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(31,77,59,0.12);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height: 64px;
+  }
+  .brand{
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--forest);
+    text-decoration:none;
+  }
+  .navlinks{ display:flex; gap: 28px; list-style:none; }
+  .navlinks a{
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-decoration:none;
+    color: var(--moss);
+    transition: color .2s ease;
+  }
+  .navlinks a:hover{ color: var(--forest); }
+
+  /* HEADER */
+  header.gallery-head{
+    padding: 64px 0 32px;
+  }
+  header h1{
+    font-family: var(--display);
+    font-size: 2.8rem;
+    color: var(--forest);
+    margin-bottom: 8px;
+  }
+  header p{
+    color: var(--ink);
+    opacity: 0.8;
+    max-width: 50ch;
+  }
+
+  /* BGM PLAYER SECTION */
+  .bgm-section{
+    background: var(--card);
+    border: 1px solid rgba(31,77,59,0.12);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 32px;
+  }
+  .bgm-section h2{
+    font-family: var(--display);
+    font-size: 1.3rem;
+    color: var(--forest);
+    margin-bottom: 12px;
+  }
+  .audio-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .audio-item{
+    background: var(--paper-dim);
+    padding: 12px;
+    border-radius: 6px;
+  }
+  .audio-item h4{
+    font-family: var(--body);
+    font-size: 0.95rem;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .audio-item audio{
+    width: 100%;
+    height: 36px;
+  }
+
+  /* GALLERY GRID */
+  .gallery-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    padding: 16px 0 80px;
+  }
+  .art-card{
+    background: var(--card);
+    border: 1px solid rgba(31,77,59,0.12);
+    border-radius: 8px;
+    padding: 16px;
+    transition: transform .2s ease;
+  }
+  
+  .art-card.clickable{
+    cursor: pointer;
+  }
+  .art-card.clickable:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(31,77,59,0.08);
+  }
+
+  .art-card img{
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    margin-bottom: 14px;
+  }
+  .art-card h3{
+    font-family: var(--display);
+    font-size: 1.2rem;
+    color: var(--ink);
+  }
+  .art-card .tag{
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .art-card p{
+    font-size: 0.88rem;
+    opacity: 0.8;
+  }
+
+  /* LIGHTBOX POPUP MODAL */
+  .modal{
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(22, 36, 28, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal.active{ display: flex; }
+  .modal-content{
+    position: relative;
+    background: var(--card);
+    padding: 24px;
+    border-radius: 12px;
+    max-width: 800px;
+    width: 90%;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  }
+  .close-btn{
+    position: absolute;
+    top: 12px; right: 18px;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  /* SLIDER */
+  .slider-container{
+    position: relative;
+    width: 100%;
+    height: 380px;
+    margin: 16px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .slide-img{
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  .slider-btn{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.7);
+    border: none;
+    font-size: 1.5rem;
+    padding: 8px 14px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background .2s ease;
+  }
+  .slider-btn:hover{ background: #fff; }
+  .prev-btn{ left: 12px; }
+  .next-btn{ right: 12px; }
+
+  /* CAPTION BOX IN MODAL */
+  .caption-box{
+    text-align: center;
+    margin-top: 10px;
+  }
+  .caption-box h4{
+    font-family: var(--display);
+    font-size: 1.15rem;
+    color: var(--forest);
+  }
+  .caption-box p{
+    font-size: 0.88rem;
+    color: var(--ink);
+    opacity: 0.85;
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html">Mickaela Luis</a>
+    <ul class="navlinks">
+      <li><a href="index.html#work">← Back to Games</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="wrap">
+  <header class="gallery-head">
+    <h1>Sound, 2D Art &amp; Asset Gallery</h1>
+    <p>A collection of textures, concept sketches,pixel assets, and original sound tracks created for various games and coursework.</p>
+  </header>
+
+  <!-- BGM AUDIO PLAYER SECTION -->
+  <section class="bgm-section">
+    <h2>Background Music Showcase</h2>
+    <div class="audio-grid">
+      <div class="audio-item">
+        <h4>AC Track 1: Matrix</h4>
+        <audio controls src="audio/matrix.wav"></audio>
+      </div>
+      <div class="audio-item">
+        <h4>AC Track 2: Video Store Lobby </h4>
+        <audio controls src="audio/video-store-lobby.wav"></audio>
+      </div>
+      <div class="audio-item">
+        <h4>Track 3: LOTR</h4>
+        <audio controls src="audio/LOTR.wav"></audio>
+      </div>
+      <div class="audio-item">
+        <h4>Scion of The Mask Keeper BGM</h4>
+        <audio controls src="audio/scion-of-the-mask-keeper-bgm.mp3"></audio>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery-grid">
+
+    <!-- Card 1: Absolute Cinema (CLICKABLE) -->
+    <div class="art-card clickable" onclick="openGallery('cinema')">
+      <img src="images/art-1.png" alt="2D Texture / Asset">
+      <span class="tag">Texture / 3D Model Map</span>
+      <h3>Absolute Cinema Textures</h3>
+      <p>2D Pixel surface maps created for low-poly models in Aseprite. <i>(Click to view 4 photos)</i></p>
+    </div>
+
+    <!-- Card 2: Freehand Digital Drawing Class (CLICKABLE) -->
+    <div class="art-card clickable" onclick="openGallery('freehand')">
+      <img src="images/freehand-1.png" alt="Freehand Digital Art">
+      <span class="tag">Digital Illustration</span>
+      <h3>Freehand Digital Drawing</h3>
+      <p>Artworks and studies created for Freehand Digital Drawing class. <i>(Click to view 6 photos)</i></p>
+    </div>
+
+    <!-- Card 3: Storyboard & Character Design (CLICKABLE) -->
+    <div class="art-card clickable" onclick="openGallery('storyboard')">
+      <img src="images/title.png" alt="Storyboard & Character Art">
+      <span class="tag">Concept Art / Storyboard</span>
+      <h3>Storyboard Character Design</h3>
+      <p>Character concepts designed for storyboard sequences. <i>(Click to view 3 photos)</i></p>
+    </div>
+
+    <!-- Card 4: Web Design / Blade Laravel (CLICKABLE) -->
+    <div class="art-card clickable" onclick="openGallery('webdesign')">
+      <img src="images/web-2.png" alt="Web Design Showcase">
+      <span class="tag">UI/UX / Web Development</span>
+      <h3>Game Store Web Design</h3>
+      <p>Storefront layout and UI designs built with Laravel Blade templates. <i>(Click to view 4 photos)</i></p>
+    </div>
+
+  </section>
+</main>
+
+<!-- POPUP GALLERY MODAL -->
+<div id="galleryModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeGallery()">&times;</span>
+    <h3 id="modalGalleryTitle" style="font-family: var(--display); color: var(--forest);">Project Gallery</h3>
+    
+    <div class="slider-container">
+      <button class="slider-btn prev-btn" onclick="changeSlide(-1)">&#10094;</button>
+      <img id="modalImage" class="slide-img" src="" alt="Gallery Asset">
+      <button class="slider-btn next-btn" onclick="changeSlide(1)">&#10095;</button>
+    </div>
+
+    <!-- TITLE & DESCRIPTION FOR EACH SLIDE -->
+    <div class="caption-box">
+      <h4 id="slideTitle"></h4>
+      <p id="slideDesc"></p>
+    </div>
+    
+    <p id="modalCounter" style="font-family: var(--mono); font-size: 0.8rem; text-align: center; color: var(--moss); margin-top: 10px;"></p>
+  </div>
+</div>
+
+<script>
+  // Dynamic Galleries Configuration
+  const galleries = {
+    cinema: {
+      title: "Absolute Cinema Textures",
+      photos: [
+        {
+          src: "images/art-1.png",
+          title: "Building Texture 1",
+          desc: "Pixel texture mapping designed for low-poly building models created in Aseprite."
+        },
+        {
+          src: "images/art-2.png",
+          title: "Building Texture 2",
+          desc: "Pixel texture mapping designed for low-poly building models created in Aseprite."
+        },
+        {
+          src: "images/art-3.png",
+          title: "Building Texture 3",
+          desc: "Pixel texture mapping designed for low-poly building models created in Aseprite."
+        },
+        {
+          src: "images/art-4.png",
+          title: "AC Props",
+          desc: "Pixel art decorative props on the Building."
+        }
+      ]
+    },
+    freehand: {
+      title: "Freehand Digital Drawing Showcase",
+      photos: [
+        {
+          src: "images/freehand-1.png",
+          title: "SpaceShip Design",
+          desc: "Final rendered Design inspired from sci-fi concept art."
+        },
+        {
+          src: "images/freehand-2.png",
+          title: "SpaceShip Refined Sketch",
+          desc: "Refined sketch of a spaceship design."
+        },
+        {
+          src: "images/freehand-3.png",
+          title: "SpaceShip Shape Exploration",
+          desc: "Digital exploration of spaceship shapes and forms."
+        },
+        {
+          src: "images/freehand-4.png",
+          title: "Hybrid Character Design",
+          desc: "Final rendered design of a male-snake hybrid character."
+        },
+        {
+          src: "images/freehand-5.png",
+          title: "Hybrid Character Sketch",
+          desc: "Refined sketch of a male-snake hybrid character."
+        },
+        {
+          src: "images/freehand-6.png",
+          title: "Hybrid Character Initial Sketch",
+          desc: "Initial sketch of a male-snake hybrid character."
+        }
+      ]
+    },
+    storyboard: {
+      title: "Storyboard & Game Character Showcase",
+      photos: [
+        {
+          src: "images/title.png",
+          title: "Title Screen Concept Art",
+          desc: "Concept art for the title screen of a game."
+        },
+        {
+          src: "images/taguwasi.png",
+          title: "Taguwasi: Main Character Design",
+          desc: "Character design for the main protagonist of a game, showcasing unique features and attire."
+        },
+        {
+          src: "images/apo-dalom.png",
+          title: "Apo Dalom: Antagonist Character Design",
+          desc: "Character design for the antagonist of a game, showcasing unique features and attire."
+        }
+      ]
+    },
+    webdesign: {
+      title: "Blade Laravel Game Store Web Design",
+      photos: [
+        {
+          src: "images/web-1.png",
+          title: "Storefront Log In Page",
+          desc: "Login page for the e-commerce store, designed with a clean and intuitive interface."
+        },
+        {
+          src: "images/web-2.png",
+          title: "Purchase Page Layout",
+          desc: "Layout for the purchase page, highlighting product details and user actions."
+        },
+        {
+          src: "images/web-3.png",
+          title: "Featured Products Grid",
+          desc: "Grid layout showcasing featured games with images and brief descriptions."
+        },
+        {
+          src: "images/web-4.png",
+          title: "Product Catalog View",
+          desc: "Grid layout highlighting item displays and category navigation."
+        }
+      ]
+    }
+  };
+
+  let currentKey = "";
+  let currentIndex = 0;
+
+  function openGallery(key) {
+    currentKey = key;
+    currentIndex = 0;
+    document.getElementById('modalGalleryTitle').innerText = galleries[key].title;
+    updateModal();
+    document.getElementById('galleryModal').classList.add('active');
+  }
+
+  function closeGallery() {
+    document.getElementById('galleryModal').classList.remove('active');
+  }
+
+  function changeSlide(direction) {
+    const activePhotos = galleries[currentKey].photos;
+    currentIndex += direction;
+    if (currentIndex < 0) currentIndex = activePhotos.length - 1;
+    if (currentIndex >= activePhotos.length) currentIndex = 0;
+    updateModal();
+  }
+
+  function updateModal() {
+    const activePhotos = galleries[currentKey].photos;
+    const item = activePhotos[currentIndex];
+    document.getElementById('modalImage').src = item.src;
+    document.getElementById('slideTitle').innerText = item.title;
+    document.getElementById('slideDesc').innerText = item.desc;
+    document.getElementById('modalCounter').innerText = `${currentIndex + 1} of ${activePhotos.length}`;
+  }
+
+  // Close popup if clicking outside the window
+  window.onclick = function(e) {
+    const modal = document.getElementById('galleryModal');
+    if (e.target === modal) closeGallery();
+  }
+</script>
+
+</body>
+</html>
