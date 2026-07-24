@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mickaela Luis — Game Dev Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F1F4EC;
+    --paper-dim: #E7ECDF;
+    --ink: #16241C;
+    --forest: #1F4D3B;
+    --moss: #5B8266;
+    --sage: #A8C3A0;
+    --amber: #D9A441;
+    --card: #FFFFFA;
+
+    --display: 'Fraunces', serif;
+    --body: 'Space Grotesk', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: inherit; }
+
+  img{ max-width:100%; display:block; }
+
+  .wrap{
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position: sticky; top:0; z-index: 50;
+    background: rgba(241,244,236,0.88);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(31,77,59,0.12);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height: 64px;
+  }
+  .brand{
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: 0.01em;
+    color: var(--forest);
+    text-decoration:none;
+  }
+  .navlinks{ display:flex; gap: 28px; list-style:none; }
+  .navlinks a{
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-decoration:none;
+    color: var(--moss);
+    transition: color .2s ease;
+  }
+  .navlinks a:hover{ color: var(--forest); }
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    position: relative;
+    overflow: hidden;
+    padding: 96px 0 88px;
+    border-bottom: 1px solid rgba(31,77,59,0.12);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 48px;
+    align-items:center;
+  }
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--amber);
+    background: rgba(217,164,65,0.12);
+    display:inline-block;
+    padding: 5px 12px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+    border: 1px solid rgba(217,164,65,0.35);
+  }
+  h1.name{
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2.6rem, 5.5vw, 4.4rem);
+    line-height: 1.02;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  h1.name em{
+    font-style: italic;
+    font-weight: 500;
+    color: var(--forest);
+  }
+  .role-line{
+    font-family: var(--body);
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: var(--forest);
+    margin-top: 18px;
+  }
+  .hero-desc{
+    max-width: 46ch;
+    margin-top: 16px;
+    color: var(--ink);
+    opacity: 0.82;
+    font-size: 1rem;
+  }
+  .hero-cta{
+    display:flex; gap: 14px; margin-top: 32px; flex-wrap: wrap;
+  }
+  .btn{
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 12px 22px;
+    border-radius: 3px;
+    text-decoration: none;
+    display:inline-block;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-solid{
+    background: var(--forest);
+    color: var(--paper);
+  }
+  .btn-solid:hover{ transform: translateY(-2px); box-shadow: 0 6px 0 rgba(31,77,59,0.25); }
+  .btn-line{
+    border: 1.5px solid var(--forest);
+    color: var(--forest);
+  }
+  .btn-line:hover{ transform: translateY(-2px); box-shadow: 0 6px 0 rgba(31,77,59,0.12); }
+
+  /* waveform signature */
+  .waveform{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 5px;
+    height: 260px;
+    background: var(--forest);
+    border-radius: 8px;
+    padding: 0 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .waveform::after{
+    content: "AUDIO DESIGN · 2D ART / TEXTURE";
+    position: absolute;
+    bottom: 14px; left: 0; right:0;
+    text-align:center;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    color: rgba(241,244,236,0.55);
+  }
+  .waveform span{
+    display:block;
+    width: 6px;
+    border-radius: 3px;
+    background: var(--sage);
+    animation: bar 1.6s ease-in-out infinite;
+  }
+  .waveform span:nth-child(3n){ background: var(--amber); }
+  .waveform span:nth-child(1){ height: 30%; animation-delay: -1.4s; }
+  .waveform span:nth-child(2){ height: 60%; animation-delay: -0.2s; }
+  .waveform span:nth-child(3){ height: 85%; animation-delay: -0.8s; }
+  .waveform span:nth-child(4){ height: 45%; animation-delay: -1.1s; }
+  .waveform span:nth-child(5){ height: 95%; animation-delay: -0.4s; }
+  .waveform span:nth-child(6){ height: 55%; animation-delay: -1.6s; }
+  .waveform span:nth-child(7){ height: 75%; animation-delay: -0.6s; }
+  .waveform span:nth-child(8){ height: 35%; animation-delay: -1.9s; }
+  .waveform span:nth-child(9){ height: 90%; animation-delay: -0.9s; }
+  .waveform span:nth-child(10){ height: 50%; animation-delay: -0.3s; }
+  .waveform span:nth-child(11){ height: 70%; animation-delay: -1.3s; }
+  .waveform span:nth-child(12){ height: 40%; animation-delay: -0.5s; }
+  .waveform span:nth-child(13){ height: 88%; animation-delay: -1.7s; }
+  .waveform span:nth-child(14){ height: 58%; animation-delay: -1.0s; }
+  .waveform span:nth-child(15){ height: 65%; animation-delay: -0.1s; }
+
+  @keyframes bar{
+    0%, 100% { transform: scaleY(0.5); }
+    50% { transform: scaleY(1); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .waveform span{ animation: none; }
+    html{ scroll-behavior: auto; }
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section{ padding: 84px 0; }
+  .section-head{
+    display:flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 44px;
+    border-bottom: 1.5px solid rgba(31,77,59,0.18);
+    padding-bottom: 16px;
+  }
+  .section-head h2{
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    color: var(--forest);
+  }
+  .section-head .tag{
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--moss);
+  }
+
+  /* about */
+  #about .wrap{
+    max-width: 1080px;
+  }
+  .about-body{
+    display:grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 48px;
+  }
+  .about-body p{
+    font-size: 1.05rem;
+    max-width: 60ch;
+  }
+  .about-body p + p{ margin-top: 16px; }
+  .fact-list{
+    list-style:none;
+    border-left: 2px solid var(--sage);
+    padding-left: 20px;
+  }
+  .fact-list li{
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    margin-bottom: 14px;
+    color: var(--forest);
+  }
+  .fact-list li span{
+    display:block;
+    color: var(--ink);
+    opacity: 0.6;
+    font-family: var(--body);
+    font-size: 0.82rem;
+    margin-top: 2px;
+  }
+
+  /* work */
+  #work{ background: var(--paper-dim); border-top: 1px solid rgba(31,77,59,0.12); border-bottom: 1px solid rgba(31,77,59,0.12); }
+  .project{
+    display:grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 40px;
+    background: var(--card);
+    border: 1px solid rgba(31,77,59,0.12);
+    border-radius: 10px;
+    overflow:hidden;
+    margin-bottom: 32px;
+  }
+  .project:last-child{ margin-bottom:0; }
+  .project-visual{
+    min-height: 260px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction: column;
+    gap: 10px;
+    color: rgba(255,255,255,0.9);
+    position: relative;
+    overflow: hidden;
+  }
+  .project-visual .glyph{
+    font-size: 2.6rem;
+  }
+  .project-visual .placeholder-label{
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+  .project-visual img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Gradient themes for placeholders */
+  .p1 .project-visual{ background: linear-gradient(160deg, #2E5A3F, #16241C); }
+  .p2 .project-visual{ background: linear-gradient(160deg, #C98A3E, #7A5323); }
+  .p3 .project-visual{ background: linear-gradient(160deg, #3B5A8A, #1B2E45); }
+  .p4 .project-visual{ background: linear-gradient(160deg, #5C3B8A, #281B45); }
+  .p5 .project-visual{ background: linear-gradient(160deg, #8A3B43, #451B20); }
+
+  .project-body{
+    padding: 30px 32px 30px 0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .project-body .role-tag{
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--amber);
+    margin-bottom: 10px;
+  }
+  .project-body h3{
+    font-family: var(--display);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .project-body .genre{
+    font-size: 0.92rem;
+    color: var(--moss);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .project-body p.desc{
+    font-size: 0.95rem;
+    opacity: 0.85;
+    max-width: 52ch;
+    margin-bottom: 16px;
+  }
+  .stack{
+    display:flex; flex-wrap:wrap; gap: 8px;
+  }
+  .stack span{
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--sage);
+    color: var(--forest);
+  }
+
+  @media (max-width: 760px){
+    .project{ grid-template-columns: 1fr; }
+    .project-body{ padding: 24px; }
+  }
+
+  /* skills */
+  .skills-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 2px;
+    background: rgba(31,77,59,0.15);
+    border: 1px solid rgba(31,77,59,0.15);
+    border-radius: 8px;
+    overflow:hidden;
+  }
+  .skill-cell{
+    background: var(--card);
+    padding: 22px 20px;
+  }
+  .skill-cell .k{
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--amber);
+  }
+  .skill-cell .v{
+    font-family: var(--body);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-top: 6px;
+    color: var(--ink);
+  }
+
+  /* contact */
+  footer#contact{
+    background: var(--forest);
+    color: var(--paper);
+    padding: 84px 0 48px;
+  }
+  footer#contact h2{
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2rem, 4vw, 3rem);
+    max-width: 16ch;
+    margin-bottom: 36px;
+  }
+  .link-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: rgba(241,244,236,0.15);
+    border: 1px solid rgba(241,244,236,0.15);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 56px;
+  }
+  .link-grid a{
+    background: rgba(22,36,28,0.4);
+    padding: 20px;
+    text-decoration:none;
+    display:flex;
+    flex-direction:column;
+    gap: 4px;
+    transition: background .2s ease;
+  }
+  .link-grid a:hover{ background: rgba(217,164,65,0.18); }
+  .link-grid a .platform{
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--amber);
+  }
+  .link-grid a .handle{
+    font-family: var(--body);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .foot-bottom{
+    display:flex; justify-content:space-between; align-items:center;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    opacity: 0.6;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top">Mickaela Luis</a>
+    <ul class="navlinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Game Development Portfolio</span>
+      <h1 class="name">Mickaela<br><em>Luis</em></h1>
+      <p class="role-line">Audio Design &amp; 2D Art / Texturing</p>
+      <p class="hero-desc">Second year game development student who builds the layer players feel before they notice it. Sound that sells an impact, texture that sells a world. Five student projects, five very different moods.</p>
+      <div class="hero-cta">
+        <a class="btn btn-solid" href="#work">See the work</a>
+        <a class="btn btn-line" href="#contact">Get in touch</a>
+      </div>
+    </div>
+    <div class="waveform" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>About</h2>
+      <span class="tag">Who's making this</span>
+    </div>
+    <div class="about-body">
+      <div>
+        <p>I'm a game development student who ended up specializing in the parts of a game most players never think to name, the footsteps, the ambient hum, the texture on a mask that makes it feel cursed rather than cute. I like sound and surface as one problem: both are about selling atmosphere.</p>
+        <p>Across my projects I've worked solo and in teams, moving between roles as needed. from dedicated audio and texture work to picking up programming when a group needed it. I'm the person who catches the small inconsistency before it becomes a bug report.</p>
+      </div>
+      <ul class="fact-list">
+        <li>Focus<span>Audio Design · 2D Art &amp; Texturing</span></li>
+        <li>Program<span>BSEMC, 2nd Year</span></li>
+        <li>Also comfortable in<span>Unity · C# · Netcode for GameObjects</span></li>
+        <li>Shipped / In Progress<span>5 student projects</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Selected Work</h2>
+      <span class="tag">5 Student Projects</span>
+    </div>
+
+    <!-- Project 1: Blessing in Disguise (Restored Placeholder) -->
+    <div class="project p1">
+      <div class="project-visual">
+        <div class="glyph">🕯️</div>
+        <div class="placeholder-label">Work in Progress</div>
+      </div>
+      <div class="project-body">
+        <span class="role-tag">Audio Design · UI · Programming </span>
+        <h3>Blessing in Disguise</h3>
+        <p class="genre">3D Hide-and-Seek Tag Game</p>
+        <p class="desc">A curse-to-blessing chase built around a cursed mask and a Holy Well — players hunt or hide while the world quietly punishes or rewards them for it. Built as parallel physics and networking projects using Unity's Netcode for GameObjects.</p>
+        <div class="stack">
+          <span>Unity</span><span>Netcode for GameObjects</span><span>Physics</span><span>Sound Design</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 2: Pawfee Corner -->
+    <div class="project p2">
+      <div class="project-visual">
+        <img src="images/pawfee-corner.png" alt="Pawfee Corner gameplay screenshot">
+      </div>
+      <div class="project-body">
+        <span class="role-tag">Programming · Sound Design</span>
+        <h3>Pawfee Corner</h3>
+        <p class="genre">2D Idle Tycoon Clicker</p>
+        <p class="desc">A cozy animal café economy game — currency systems, upgrade tiers, and daily rewards balanced from scratch. Stepped outside my usual art/audio lane to implement the core systems in code and design the game's sound.</p>
+        <div class="stack">
+          <span>Unity</span><span>C#</span><span>Economy Design</span><span>Sound Design</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 3: Absolute Cinema -->
+    <div class="project p3">
+      <div class="project-visual">
+        <img src="images/absolute-cinema.png" alt="Absolute Cinema gameplay screenshot">
+      </div>
+      <div class="project-body">
+        <span class="role-tag">Audio Design · 2D Texturing (3D Models)</span>
+        <h3>Absolute Cinema</h3>
+        <p class="genre">2.5D Top-Down Action — Mixed 2D/3D</p>
+        <p class="desc">Players enter corrupted movie worlds, each reimagined as a distinct combat arena inspired by a different classic film genre, and defeat the antagonist restoring it. I handled the audio and the 2D textures applied to the 3D models across each world.</p>
+        <div class="stack">
+          <span>Unity</span><span>2.5D</span><span>Texturing</span><span>Sound Design</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 4: Scion of the Mask Keeper -->
+    <div class="project p4">
+      <div class="project-visual">
+        <img src="images/scion-of-the-mask-keeper.png" alt="Scion of the Mask Keeper gameplay screenshot">
+      </div>
+      <div class="project-body">
+        <span class="role-tag">3D Texturing · Sound Design</span>
+        <h3>Scion of the Mask Keeper</h3>
+        <p class="genre">3D/2D Shop Keeper Simulation</p>
+        <p class="desc">After finding a strange mask in your late grandfather's belongings, you are transported to an otherworld of faceless spirits. As a Mask Artisan, craft and match masks to spirit moods to collect spirit essence, prevent corruption, and maintain your sanity to escape.</p>
+        <div class="stack">
+          <span>Unity</span><span>3D Texturing</span><span>Sound Design</span><span>Atmospheric Design</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 5: Samsara -->
+    <div class="project p5">
+      <div class="project-visual">
+        <img src="images/samsara.png" alt="Samsara gameplay screenshot">
+      </div>
+      <div class="project-body">
+        <span class="role-tag">Sound Design</span>
+        <h3>Samsara</h3>
+        <p class="genre">Audio &amp; Atmospheric Design</p>
+        <p class="desc">A sound-driven experience focused on building tone, impact, and immersion through specialized sound design and dynamic audio implementation.</p>
+        <div class="stack">
+          <span>Sound Design</span><span>Audio Implementation</span><span>Atmospheric Audio</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Skills</h2>
+      <span class="tag">Tools &amp; Focus Areas</span>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-cell"><div class="k">Core</div><div class="v">Audio Design &amp; Implementation</div></div>
+      <div class="skill-cell"><div class="k">Core</div><div class="v">2D Art &amp; Texturing</div></div>
+      <div class="skill-cell"><div class="k">Engine</div><div class="v">Unity</div></div>
+      <div class="skill-cell"><div class="k">Networking</div><div class="v">Netcode for GameObjects</div></div>
+      <div class="skill-cell"><div class="k">Scripting</div><div class="v">C#</div></div>
+      <div class="skill-cell"><div class="k">3D Support</div><div class="v">Texturing for 3D Models</div></div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Let's build something that sounds as good as it looks.</h2>
+    <div class="link-grid">
+      <a href="https://www.linkedin.com/in/mickaela-luis-b248b8381/" target="_blank" rel="noopener">
+        <span class="platform">LinkedIn</span>
+        <span class="handle">Mickaela Luis</span>
+      </a>
+      <a href="https://github.com/mika8891" target="_blank" rel="noopener">
+        <span class="platform">GitHub</span>
+        <span class="handle">mika8891</span>
+      </a>
+      <a href="https://vitanimz.itch.io/" target="_blank" rel="noopener">
+        <span class="platform">itch.io</span>
+        <span class="handle">vitanimz</span>
+      </a>
+      <a href="https://www.artstation.com/zero_mjl9" target="_blank" rel="noopener">
+        <span class="platform">ArtStation</span>
+        <span class="handle">zero_mjl9</span>
+      </a>
+      <a href="https://sketchfab.com/mickaela.luis" target="_blank" rel="noopener">
+        <span class="platform">Sketchfab</span>
+        <span class="handle">mickaela.luis</span>
+      </a>
+    </div>
+    <div class="foot-bottom">
+      <span>Mickaela Luis — Game Development Portfolio</span>
+      <span>Built 2026</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
