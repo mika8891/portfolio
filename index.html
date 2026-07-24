@@ -155,12 +155,19 @@
   .btn-line:hover{ transform: translateY(-2px); box-shadow: 0 6px 0 rgba(31,77,59,0.12); }
 
   /* waveform signature */
+  .waveform-column{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
   .waveform{
     display:flex;
     align-items:center;
     justify-content:center;
     gap: 5px;
     height: 260px;
+    width: 100%;
     background: var(--forest);
     border-radius: 8px;
     padding: 0 20px;
@@ -201,6 +208,39 @@
   .waveform span:nth-child(14){ height: 58%; animation-delay: -1.0s; }
   .waveform span:nth-child(15){ height: 65%; animation-delay: -0.1s; }
 
+  /* Gallery Button below Waveform */
+  .gallery-btn-wrapper {
+    margin-top: 16px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .gallery-btn {
+    display: block;
+    width: 100%;
+    padding: 12px 16px;
+    background-color: var(--card);
+    color: var(--forest) !important;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    border-radius: 6px;
+    border: 1px solid rgba(31,77,59,0.2);
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(31, 77, 59, 0.05);
+  }
+
+  .gallery-btn:hover {
+    background-color: var(--forest);
+    color: var(--paper) !important;
+    border-color: var(--forest);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(31, 77, 59, 0.15);
+  }
+
   @keyframes bar{
     0%, 100% { transform: scaleY(0.5); }
     50% { transform: scaleY(1); }
@@ -209,6 +249,10 @@
   @media (prefers-reduced-motion: reduce){
     .waveform span{ animation: none; }
     html{ scroll-behavior: auto; }
+  }
+
+  @media (max-width: 760px){
+    .hero-grid{ grid-template-columns: 1fr; }
   }
 
   /* ---------- SECTIONS ---------- */
@@ -367,6 +411,7 @@
   @media (max-width: 760px){
     .project{ grid-template-columns: 1fr; }
     .project-body{ padding: 24px; }
+    .about-body{ grid-template-columns: 1fr; }
   }
 
   /* skills */
@@ -479,10 +524,20 @@
         <a class="btn btn-line" href="#contact">Get in touch</a>
       </div>
     </div>
-    <div class="waveform" aria-hidden="true">
-      <span></span><span></span><span></span><span></span><span></span>
-      <span></span><span></span><span></span><span></span><span></span>
-      <span></span><span></span><span></span><span></span><span></span>
+    
+    <div class="waveform-column">
+      <div class="waveform" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      
+      <!-- BUTTON DIRECTLY BELOW WAVEFORM -->
+      <div class="gallery-btn-wrapper">
+        <a href="ArtPage.html" class="gallery-btn">
+          2D Art, Sound &amp; Web Gallery →
+        </a>
+      </div>
     </div>
   </div>
 </header>
