@@ -6,7 +6,9 @@
 <title>2D Art & Assets — Mickaela Luis</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@500,600,700,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Anonymous+Pro:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
   :root{
     --paper: #050B08;
@@ -20,18 +22,53 @@
     --card: #0E1A15;
 
     --display: 'Fraunces', serif;
+    --display-bold: 'General Sans', sans-serif;
     --body: 'Space Grotesk', sans-serif;
     --mono: 'JetBrains Mono', monospace;
+    --hacker: 'Anonymous Pro', 'Noto Sans Symbols', 'Noto Sans Symbols 2', monospace;
   }
 
   *{ box-sizing: border-box; margin:0; padding:0; }
   body{
-    background: linear-gradient(180deg, #05080A 0%, #071A13 30%, #0A2C1F 60%, #0F4A32 85%, #10B981 130%);
-    background-attachment: fixed;
+    background: #000000;
     color: var(--ink);
     font-family: var(--body);
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+  /* two-layer glowing grid backdrop, matching index.html */
+  body::before,
+  body::after{
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+  }
+  /* static grid, front layer */
+  body::before{
+    background-image:
+      linear-gradient(rgba(16,185,129,0.10) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(16,185,129,0.10) 1px, transparent 1px);
+    background-size: 44px 44px;
+    z-index: -1;
+  }
+  /* drifting grid, back layer */
+  body::after{
+    background-image:
+      linear-gradient(rgba(16,185,129,0.16) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(16,185,129,0.16) 1px, transparent 1px);
+    background-size: 88px 88px;
+    animation: grid-drift 22s linear infinite;
+  }
+  @keyframes grid-drift{
+    from{ background-position: 0 0; }
+    to{ background-position: 88px 88px; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    body::after{ animation: none; }
   }
   a{ color: inherit; }
   img{ max-width:100%; display:block; border-radius: 6px; }
@@ -67,6 +104,30 @@
     transition: color .2s ease;
   }
   .navlinks a:hover{ color: var(--forest); }
+
+  /* slash divider — animated like the ticker, matching index.html */
+  .slash-rule{
+    height: 14px;
+    color: transparent;
+    overflow: hidden;
+    user-select: none;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      rgba(16,185,129,0.4) 0px,
+      rgba(16,185,129,0.4) 2px,
+      transparent 2px,
+      transparent 11px
+    );
+    background-size: 200% 100%;
+    animation: slash-scroll 3.5s linear infinite;
+  }
+  @keyframes slash-scroll{
+    from{ background-position: 0 0; }
+    to{ background-position: -15.55px 0; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .slash-rule, .card-slash-pattern, .card-slash-cta .blink, .art-visual::before{ animation: none; }
+  }
 
   /* HEADER */
   header.gallery-head{
@@ -133,6 +194,57 @@
     padding: 16px;
     transition: transform .2s ease;
   }
+
+  /* slash header, gap top/left/bottom + blinking CTA on the right */
+  .card-slash{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    margin: -16px -16px 14px -16px;
+    padding: 6px 12px 6px 14px;
+    border-bottom: 1px solid rgba(16,185,129,0.18);
+    background-color: rgba(5,11,8,0.5);
+    border-radius: 8px 8px 0 0;
+    overflow: hidden;
+  }
+  .card-slash-pattern{
+    flex: 1;
+    min-width: 0;
+    height: 8px;
+    border-radius: 2px;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      rgba(16,185,129,0.5) 0px,
+      rgba(16,185,129,0.5) 2px,
+      transparent 2px,
+      transparent 9px
+    );
+    background-size: 200% 100%;
+    animation: card-slash-scroll 2.6s linear infinite;
+  }
+  @keyframes card-slash-scroll{
+    from{ background-position: 0 0; }
+    to{ background-position: -12.73px 0; }
+  }
+  .card-slash-cta{
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--forest);
+    white-space: nowrap;
+    flex-shrink: 0;
+    display:flex;
+    align-items:center;
+    gap: 4px;
+  }
+  .card-slash-cta .blink{
+    animation: cta-blink 1s steps(1) infinite;
+  }
+  @keyframes cta-blink{
+    0%, 49%{ opacity: 1; }
+    50%, 100%{ opacity: 0; }
+  }
   
   .art-card.clickable{
     cursor: pointer;
@@ -148,6 +260,35 @@
     object-fit: cover;
     margin-bottom: 14px;
   }
+  .art-visual{
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+    margin-bottom: 14px;
+  }
+  .art-visual img{
+    margin-bottom: 0;
+  }
+  .art-visual::before{
+    content:'';
+    position:absolute;
+    left:0; right:0;
+    height: 45%;
+    background: linear-gradient(180deg,
+      rgba(16,185,129,0) 0%,
+      rgba(16,185,129,0.25) 40%,
+      rgba(127,201,163,0.85) 50%,
+      rgba(16,185,129,0.25) 60%,
+      rgba(16,185,129,0) 100%);
+    mix-blend-mode: screen;
+    pointer-events: none;
+    z-index: 1;
+    animation: scan-sweep 3.4s ease-in-out infinite;
+  }
+  @keyframes scan-sweep{
+    0%{ transform: translateY(-120%); }
+    100%{ transform: translateY(220%); }
+  }
   .art-card h3{
     font-family: var(--display);
     font-size: 1.2rem;
@@ -162,8 +303,10 @@
     display: block;
   }
   .art-card p{
-    font-size: 0.88rem;
-    opacity: 0.8;
+    font-family: var(--hacker);
+    font-size: 0.86rem;
+    line-height: 1.55;
+    opacity: 0.85;
   }
 
   /* LIGHTBOX POPUP MODAL */
@@ -242,9 +385,11 @@
     color: var(--forest);
   }
   .caption-box p{
-    font-size: 0.88rem;
+    font-family: var(--hacker);
+    font-size: 0.9rem;
+    line-height: 1.6;
     color: var(--ink);
-    opacity: 0.85;
+    opacity: 0.9;
     margin-top: 4px;
   }
 </style>
@@ -260,6 +405,7 @@
     </ul>
   </div>
 </nav>
+<div class="slash-rule" aria-hidden="true"></div>
 
 <main class="wrap">
   <header class="gallery-head">
@@ -294,7 +440,8 @@
 
     <!-- Card 1: Absolute Cinema (CLICKABLE) -->
     <div class="art-card clickable" onclick="openGallery('cinema')">
-      <img src="images/art-1.png" alt="2D Texture / Asset">
+      <div class="card-slash" aria-hidden="true"><div class="card-slash-pattern"></div><span class="card-slash-cta"><span class="blink">&gt;</span> click to run</span></div>
+      <div class="art-visual"><img src="images/art-1.png" alt="2D Texture / Asset"></div>
       <span class="tag">Texture / 3D Model Map</span>
       <h3>Absolute Cinema Textures</h3>
       <p>2D Pixel surface maps created for low-poly models in Aseprite. <i>(Click to view 4 photos)</i></p>
@@ -302,7 +449,8 @@
 
     <!-- Card 2: Freehand Digital Drawing Class (CLICKABLE) -->
     <div class="art-card clickable" onclick="openGallery('freehand')">
-      <img src="images/freehand-1.png" alt="Freehand Digital Art">
+      <div class="card-slash" aria-hidden="true"><div class="card-slash-pattern"></div><span class="card-slash-cta"><span class="blink">&gt;</span> click to run</span></div>
+      <div class="art-visual"><img src="images/freehand-1.png" alt="Freehand Digital Art"></div>
       <span class="tag">Digital Illustration</span>
       <h3>Freehand Digital Drawing</h3>
       <p>Artworks and studies created for Freehand Digital Drawing class. <i>(Click to view 6 photos)</i></p>
@@ -310,7 +458,8 @@
 
     <!-- Card 3: Storyboard & Character Design (CLICKABLE) -->
     <div class="art-card clickable" onclick="openGallery('storyboard')">
-      <img src="images/title.png" alt="Storyboard & Character Art">
+      <div class="card-slash" aria-hidden="true"><div class="card-slash-pattern"></div><span class="card-slash-cta"><span class="blink">&gt;</span> click to run</span></div>
+      <div class="art-visual"><img src="images/title.png" alt="Storyboard & Character Art"></div>
       <span class="tag">Concept Art / Storyboard</span>
       <h3>Storyboard Character Design</h3>
       <p>Character concepts designed for storyboard sequences. <i>(Click to view 3 photos)</i></p>
@@ -318,7 +467,8 @@
 
     <!-- Card 4: Web Design / Blade Laravel (CLICKABLE) -->
     <div class="art-card clickable" onclick="openGallery('webdesign')">
-      <img src="images/web-2.png" alt="Web Design Showcase">
+      <div class="card-slash" aria-hidden="true"><div class="card-slash-pattern"></div><span class="card-slash-cta"><span class="blink">&gt;</span> click to run</span></div>
+      <div class="art-visual"><img src="images/web-2.png" alt="Web Design Showcase"></div>
       <span class="tag">UI/UX / Web Development</span>
       <h3>Game Store Web Design</h3>
       <p>Storefront layout and UI designs built with Laravel Blade templates. <i>(Click to view 4 photos)</i></p>
