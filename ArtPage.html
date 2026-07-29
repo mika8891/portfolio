@@ -6,9 +6,7 @@
 <title>2D Art & Assets — Mickaela Luis</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://api.fontshare.com">
-<link href="https://api.fontshare.com/v2/css?f[]=general-sans@500,600,700,800&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Anonymous+Pro:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 <style>
   :root{
     --paper: #050B08;
@@ -21,10 +19,10 @@
     --amber: #D9A441;
     --card: #0E1A15;
 
-    --display: 'Fraunces', serif;
-    --display-bold: 'General Sans', sans-serif;
-    --body: 'Space Grotesk', sans-serif;
-    --mono: 'JetBrains Mono', monospace;
+    --display: 'Anonymous Pro', 'Noto Sans Symbols', 'Noto Sans Symbols 2', monospace;
+    --display-bold: 'Anonymous Pro', 'Noto Sans Symbols', 'Noto Sans Symbols 2', monospace;
+    --body: 'Anonymous Pro', 'Noto Sans Symbols', 'Noto Sans Symbols 2', monospace;
+    --mono: 'Anonymous Pro', 'Noto Sans Symbols', 'Noto Sans Symbols 2', monospace;
     --hacker: 'Anonymous Pro', 'Noto Sans Symbols', 'Noto Sans Symbols 2', monospace;
   }
 
@@ -65,7 +63,7 @@
   }
   @keyframes grid-drift{
     from{ background-position: 0 0; }
-    to{ background-position: 88px 88px; }
+    to{ background-position: 88px 0; }
   }
   @media (prefers-reduced-motion: reduce){
     body::after{ animation: none; }
@@ -159,25 +157,183 @@
     color: var(--forest);
     margin-bottom: 12px;
   }
-  .audio-grid{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 16px;
-  }
-  .audio-item{
+  /* AUDIO FILE EXPLORER + PLAYER */
+  .audio-explorer{
+    border: 1px solid rgba(16,185,129,0.25);
+    border-radius: 8px;
+    overflow: hidden;
     background: var(--paper-dim);
-    padding: 12px;
-    border-radius: 6px;
   }
-  .audio-item h4{
-    font-family: var(--body);
-    font-size: 0.95rem;
+  .explorer-titlebar{
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: rgba(5,11,8,0.7);
+    border-bottom: 1px solid rgba(16,185,129,0.2);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: var(--moss);
+  }
+  .explorer-dots{ display:flex; gap: 5px; }
+  .explorer-dots span{
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(16,185,129,0.35);
+  }
+  .explorer-path{ flex:1; color: var(--forest); }
+  .explorer-count{ opacity: 0.6; text-transform: uppercase; flex-shrink: 0; }
+
+  .explorer-body{
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+  }
+  @media (max-width: 760px){
+    .explorer-body{ grid-template-columns: 1fr; }
+  }
+
+  .track-list{
+    list-style: none;
+    border-right: 1px solid rgba(16,185,129,0.15);
+    max-height: 360px;
+    overflow-y: auto;
+  }
+  .track-row{
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(16,185,129,0.1);
+    border-left: 2px solid transparent;
+    cursor: pointer;
+    transition: background .15s ease, padding-left .15s ease, border-color .15s ease;
+  }
+  .track-row:hover{ background: rgba(16,185,129,0.06); padding-left: 20px; }
+  .track-row.active{
+    background: rgba(16,185,129,0.12);
+    border-left-color: var(--forest);
+  }
+  .track-play-icon{
+    font-size: 0.65rem;
+    color: var(--forest);
+    width: 14px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .track-row.active .track-play-icon{
+    animation: cta-blink 1s steps(1) infinite;
+  }
+  .track-info{
+    display:flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+  .track-name{
+    font-family: var(--mono);
+    font-size: 0.85rem;
     color: var(--ink);
-    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .audio-item audio{
+  .track-sub{
+    font-family: var(--hacker);
+    font-size: 0.72rem;
+    color: var(--moss);
+    opacity: 0.8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .track-status{
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    color: var(--amber);
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  .now-playing{
+    padding: 18px 20px 20px;
+    display:flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+  }
+  .np-header{
+    display:flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .np-label{
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--forest);
+    flex-shrink: 0;
+  }
+  .np-title{
+    font-family: var(--hacker);
+    font-size: 0.82rem;
+    color: var(--ink);
+    opacity: 0.85;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .wave-canvas{
     width: 100%;
-    height: 36px;
+    height: 140px;
+    background: rgba(5,11,8,0.55);
+    border: 1px solid rgba(16,185,129,0.2);
+    border-radius: 6px;
+    display: block;
+  }
+  .np-controls{
+    display:flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .np-btn{
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(16,185,129,0.4);
+    background: rgba(16,185,129,0.1);
+    color: var(--forest);
+    font-size: 0.8rem;
+    cursor: pointer;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink: 0;
+    transition: background .2s ease;
+  }
+  .np-btn:hover:not(:disabled){ background: rgba(16,185,129,0.25); }
+  .np-btn:disabled{ opacity: 0.4; cursor: not-allowed; }
+  .np-time{
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--moss);
+    flex-shrink: 0;
+    width: 34px;
+  }
+  .np-progress{
+    flex:1;
+    height: 5px;
+    background: rgba(16,185,129,0.15);
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+  }
+  .np-progress-fill{
+    position:absolute; left:0; top:0; bottom:0;
+    width: 0%;
+    background: var(--forest);
+    border-radius: 3px;
   }
 
   /* GALLERY GRID */
@@ -416,24 +572,63 @@
   <!-- BGM AUDIO PLAYER SECTION -->
   <section class="bgm-section">
     <h2>Background Music Showcase</h2>
-    <div class="audio-grid">
-      <div class="audio-item">
-        <h4>AC Track 1: Matrix</h4>
-        <audio controls src="audio/matrix.wav"></audio>
+    <div class="audio-explorer">
+      <div class="explorer-titlebar">
+        <span class="explorer-dots"><span></span><span></span><span></span></span>
+        <span class="explorer-path">~/audio/library</span>
+        <span class="explorer-count">4 files</span>
       </div>
-      <div class="audio-item">
-        <h4>AC Track 2: Video Store Lobby </h4>
-        <audio controls src="audio/video-store-lobby.wav"></audio>
-      </div>
-      <div class="audio-item">
-        <h4>Track 3: LOTR</h4>
-        <audio controls src="audio/LOTR.wav"></audio>
-      </div>
-      <div class="audio-item">
-        <h4>Scion of The Mask Keeper BGM</h4>
-        <audio controls src="audio/scion-of-the-mask-keeper-bgm.mp3"></audio>
+      <div class="explorer-body">
+        <ul class="track-list">
+          <li class="track-row" data-src="audio/matrix.wav" data-title="AC Track 1: Matrix">
+            <span class="track-play-icon">▶</span>
+            <span class="track-info">
+              <span class="track-name">matrix.wav</span>
+              <span class="track-sub">AC Track 1: Matrix</span>
+            </span>
+            <span class="track-status">WAV</span>
+          </li>
+          <li class="track-row" data-src="audio/video-store-lobby.wav" data-title="AC Track 2: Video Store Lobby">
+            <span class="track-play-icon">▶</span>
+            <span class="track-info">
+              <span class="track-name">video-store-lobby.wav</span>
+              <span class="track-sub">AC Track 2: Video Store Lobby</span>
+            </span>
+            <span class="track-status">WAV</span>
+          </li>
+          <li class="track-row" data-src="audio/LOTR.wav" data-title="Track 3: LOTR">
+            <span class="track-play-icon">▶</span>
+            <span class="track-info">
+              <span class="track-name">LOTR.wav</span>
+              <span class="track-sub">Track 3: LOTR</span>
+            </span>
+            <span class="track-status">WAV</span>
+          </li>
+          <li class="track-row" data-src="audio/scion-of-the-mask-keeper-bgm.mp3" data-title="Scion of The Mask Keeper BGM">
+            <span class="track-play-icon">▶</span>
+            <span class="track-info">
+              <span class="track-name">scion-of-the-mask-keeper-bgm.mp3</span>
+              <span class="track-sub">Scion of The Mask Keeper BGM</span>
+            </span>
+            <span class="track-status">MP3</span>
+          </li>
+        </ul>
+        <div class="now-playing">
+          <div class="np-header">
+            <span class="np-label">Now Playing</span>
+            <span class="np-title" id="npTitle">— select a file to run —</span>
+          </div>
+          <canvas class="wave-canvas" id="waveCanvas"></canvas>
+          <div class="np-controls">
+            <button class="np-btn" id="playPauseBtn" disabled aria-label="Play or pause">▶</button>
+            <span class="np-time" id="npTimeCurrent">0:00</span>
+            <div class="np-progress" id="npProgress"><div class="np-progress-fill" id="npProgressFill"></div></div>
+            <span class="np-time" id="npTimeTotal">0:00</span>
+          </div>
+        </div>
       </div>
     </div>
+    <audio id="playerAudio" preload="none"></audio>
   </section>
 
   <section class="gallery-grid">
@@ -646,6 +841,138 @@
     const modal = document.getElementById('galleryModal');
     if (e.target === modal) closeGallery();
   }
+
+  // ---------- AUDIO FILE EXPLORER PLAYER ----------
+  (function(){
+    const audio = document.getElementById('playerAudio');
+    const rows = document.querySelectorAll('.track-row');
+    const npTitle = document.getElementById('npTitle');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const npProgress = document.getElementById('npProgress');
+    const npProgressFill = document.getElementById('npProgressFill');
+    const npTimeCurrent = document.getElementById('npTimeCurrent');
+    const npTimeTotal = document.getElementById('npTimeTotal');
+    const canvas = document.getElementById('waveCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let audioCtx, analyser, source, dataArray, bufferLength, rafId;
+    let activeRow = null;
+
+    function formatTime(sec){
+      if(!isFinite(sec) || sec === null) return '0:00';
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60).toString().padStart(2, '0');
+      return m + ':' + s;
+    }
+
+    function resizeCanvas(){
+      canvas.width = canvas.clientWidth;
+      canvas.height = canvas.clientHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function ensureAudioGraph(){
+      if(audioCtx) return;
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      source = audioCtx.createMediaElementSource(audio);
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 128;
+      bufferLength = analyser.frequencyBinCount;
+      dataArray = new Uint8Array(bufferLength);
+      source.connect(analyser);
+      analyser.connect(audioCtx.destination);
+    }
+
+    function drawIdle(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function drawFrame(){
+      rafId = requestAnimationFrame(drawFrame);
+      analyser.getByteFrequencyData(dataArray);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const barCount = 48;
+      const step = Math.max(1, Math.floor(bufferLength / barCount));
+      const barWidth = canvas.width / barCount;
+      for(let i = 0; i < barCount; i++){
+        const v = dataArray[i * step] || 0;
+        const pct = v / 255;
+        const barHeight = Math.max(3, pct * canvas.height);
+        const x = i * barWidth;
+        const y = (canvas.height - barHeight) / 2;
+        ctx.fillStyle = (i % 4 === 0) ? 'rgba(217,164,65,0.85)' : 'rgba(16,185,129,0.85)';
+        ctx.shadowColor = 'rgba(16,185,129,0.55)';
+        ctx.shadowBlur = 6;
+        ctx.fillRect(x + 1, y, Math.max(1, barWidth - 2), barHeight);
+      }
+    }
+
+    function playTrack(row){
+      const src = row.getAttribute('data-src');
+      const title = row.getAttribute('data-title');
+      if(activeRow) activeRow.classList.remove('active');
+      activeRow = row;
+      row.classList.add('active');
+      npTitle.textContent = title;
+      ensureAudioGraph();
+      if(audioCtx.state === 'suspended') audioCtx.resume();
+      if(!audio.src || audio.src.indexOf(src) === -1){
+        audio.src = src;
+      }
+      audio.play();
+    }
+
+    rows.forEach(function(row){
+      row.addEventListener('click', function(){
+        if(activeRow === row && !audio.paused){
+          audio.pause();
+        } else {
+          playTrack(row);
+        }
+      });
+    });
+
+    playPauseBtn.addEventListener('click', function(){
+      if(!activeRow) return;
+      if(audio.paused){ audio.play(); } else { audio.pause(); }
+    });
+
+    audio.addEventListener('play', function(){
+      playPauseBtn.textContent = '❚❚';
+      playPauseBtn.disabled = false;
+      cancelAnimationFrame(rafId);
+      drawFrame();
+    });
+    audio.addEventListener('pause', function(){
+      playPauseBtn.textContent = '▶';
+      cancelAnimationFrame(rafId);
+      drawIdle();
+    });
+    audio.addEventListener('ended', function(){
+      playPauseBtn.textContent = '▶';
+      cancelAnimationFrame(rafId);
+      drawIdle();
+      if(activeRow) activeRow.classList.remove('active');
+      activeRow = null;
+      npTitle.textContent = '— select a file to run —';
+    });
+    audio.addEventListener('timeupdate', function(){
+      const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+      npProgressFill.style.width = pct + '%';
+      npTimeCurrent.textContent = formatTime(audio.currentTime);
+    });
+    audio.addEventListener('loadedmetadata', function(){
+      npTimeTotal.textContent = formatTime(audio.duration);
+    });
+
+    npProgress.addEventListener('click', function(e){
+      if(!audio.duration) return;
+      const rect = npProgress.getBoundingClientRect();
+      const pct = (e.clientX - rect.left) / rect.width;
+      audio.currentTime = pct * audio.duration;
+    });
+  })();
 </script>
 
 </body>
