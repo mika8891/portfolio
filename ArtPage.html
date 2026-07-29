@@ -9,14 +9,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper: #F1F4EC;
-    --paper-dim: #E7ECDF;
-    --ink: #16241C;
-    --forest: #1F4D3B;
-    --moss: #5B8266;
-    --sage: #A8C3A0;
+    --paper: #050B08;
+    --paper-dim: #081611;
+    --ink: #E7F5EC;
+    --forest: #10B981;
+    --forest-deep: #065F46;
+    --moss: #7FC9A3;
+    --sage: #1B4335;
     --amber: #D9A441;
-    --card: #FFFFFA;
+    --card: #0E1A15;
 
     --display: 'Fraunces', serif;
     --body: 'Space Grotesk', sans-serif;
@@ -25,7 +26,8 @@
 
   *{ box-sizing: border-box; margin:0; padding:0; }
   body{
-    background: var(--paper);
+    background: linear-gradient(180deg, #05080A 0%, #071A13 30%, #0A2C1F 60%, #0F4A32 85%, #10B981 130%);
+    background-attachment: fixed;
     color: var(--ink);
     font-family: var(--body);
     line-height: 1.55;
@@ -39,9 +41,9 @@
   /* NAV */
   nav{
     position: sticky; top:0; z-index: 50;
-    background: rgba(241,244,236,0.88);
+    background: rgba(5,11,8,0.75);
     backdrop-filter: blur(6px);
-    border-bottom: 1px solid rgba(31,77,59,0.12);
+    border-bottom: 1px solid rgba(16,185,129,0.12);
   }
   nav .wrap{
     display:flex; align-items:center; justify-content:space-between;
@@ -85,7 +87,7 @@
   /* BGM PLAYER SECTION */
   .bgm-section{
     background: var(--card);
-    border: 1px solid rgba(31,77,59,0.12);
+    border: 1px solid rgba(16,185,129,0.12);
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 32px;
@@ -126,7 +128,7 @@
   }
   .art-card{
     background: var(--card);
-    border: 1px solid rgba(31,77,59,0.12);
+    border: 1px solid rgba(16,185,129,0.12);
     border-radius: 8px;
     padding: 16px;
     transition: transform .2s ease;
@@ -137,7 +139,7 @@
   }
   .art-card.clickable:hover{
     transform: translateY(-4px);
-    box-shadow: 0 10px 20px rgba(31,77,59,0.08);
+    box-shadow: 0 10px 20px rgba(16,185,129,0.08);
   }
 
   .art-card img{
