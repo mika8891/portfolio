@@ -36,7 +36,7 @@
   a{ color: inherit; }
   img{ max-width:100%; display:block; border-radius: 6px; }
 
-  .wrap{ max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+  .wrap{ max-width: 1440px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); }
 
   /* NAV */
   nav{
@@ -70,7 +70,7 @@
 
   /* HEADER */
   header.gallery-head{
-    padding: 64px 0 32px;
+    padding: 48px 0 28px;
   }
   header h1{
     font-family: var(--display);
@@ -122,9 +122,9 @@
   /* GALLERY GRID */
   .gallery-grid{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 24px;
-    padding: 16px 0 80px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    padding: 16px 0 60px;
   }
   .art-card{
     background: var(--card);
