@@ -6,6 +6,8 @@
 <title>Mickaela Luis — Game Dev Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@500,600,700,800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -20,6 +22,7 @@
     --card: #0E1A15;
 
     --display: 'Fraunces', serif;
+    --display-bold: 'General Sans', sans-serif;
     --body: 'Space Grotesk', sans-serif;
     --mono: 'JetBrains Mono', monospace;
   }
@@ -66,17 +69,37 @@
     color: var(--forest);
     text-decoration:none;
   }
-  .navlinks{ display:flex; gap: 28px; list-style:none; }
+  .navlinks{ display:flex; gap: 26px; list-style:none; }
   .navlinks a{
     font-family: var(--mono);
     font-size: 0.78rem;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.04em;
     text-decoration:none;
     color: var(--moss);
     transition: color .2s ease;
   }
+  .navlinks a::before{ content: '['; color: rgba(16,185,129,0.45); }
+  .navlinks a::after{ content: ']'; color: rgba(16,185,129,0.45); }
   .navlinks a:hover{ color: var(--forest); }
+  .nav-status{
+    display:flex;
+    align-items:center;
+    gap: 7px;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--moss);
+  }
+  .nav-status .dot{
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--forest);
+    box-shadow: 0 0 6px rgba(16,185,129,0.9);
+    animation: pulse-dot 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse-dot{ 0%,100%{opacity:1;} 50%{opacity:0.35;} }
+  @media (max-width: 640px){ .nav-status{ display:none; } }
 
   /* ---------- HERO ---------- */
   header.hero{
@@ -105,24 +128,27 @@
     border: 1px solid rgba(217,164,65,0.35);
   }
   h1.name{
-    font-family: var(--display);
-    font-weight: 700;
-    font-size: clamp(2.6rem, 5.5vw, 4.4rem);
-    line-height: 1.02;
+    font-family: var(--display-bold);
+    font-weight: 800;
+    font-size: clamp(2.4rem, 6.5vw, 4.9rem);
+    line-height: 0.96;
+    text-transform: uppercase;
     color: var(--ink);
     letter-spacing: -0.01em;
   }
   h1.name em{
-    font-style: italic;
-    font-weight: 500;
+    font-style: normal;
     color: var(--forest);
+    display:block;
   }
   .role-line{
-    font-family: var(--body);
-    font-weight: 600;
-    font-size: 1.15rem;
-    color: var(--forest);
-    margin-top: 18px;
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--moss);
+    margin-top: 20px;
   }
   .hero-desc{
     max-width: 46ch;
@@ -272,10 +298,21 @@
     padding-bottom: 16px;
   }
   .section-head h2{
-    font-family: var(--display);
+    font-family: var(--display-bold);
     font-weight: 700;
-    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    font-size: clamp(1.6rem, 2.8vw, 2.15rem);
+    color: var(--ink);
+    display:flex;
+    align-items:baseline;
+    gap: 12px;
+  }
+  .section-head h2 .num{
+    font-family: var(--mono);
+    font-size: 0.9rem;
     color: var(--forest);
+    font-weight: 500;
   }
   .section-head .tag{
     font-family: var(--mono);
@@ -283,6 +320,59 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--moss);
+  }
+
+  /* ticker marquee */
+  .ticker{
+    border-top: 1px solid rgba(16,185,129,0.18);
+    border-bottom: 1px solid rgba(16,185,129,0.18);
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 26px 0;
+    background: rgba(5,11,8,0.4);
+  }
+  .ticker-track{
+    display:inline-flex;
+    gap: 0;
+    animation: ticker-scroll 30s linear infinite;
+  }
+  .ticker-track span{
+    font-family: var(--display-bold);
+    font-weight: 800;
+    font-size: clamp(1.8rem, 5.2vw, 3.4rem);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    opacity: 0.9;
+    padding: 0 34px;
+    display:inline-flex;
+    align-items:center;
+    gap: 34px;
+  }
+  .ticker-track span::after{
+    content: '◆';
+    font-size: 1rem;
+    color: var(--forest);
+  }
+  @keyframes ticker-scroll{
+    from{ transform: translateX(0); }
+    to{ transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ticker-track{ animation: none; }
+  }
+
+  /* slash divider */
+  .slash-rule{
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0;
+    color: rgba(16,185,129,0.25);
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 1;
+    user-select: none;
+    padding: 2px 0;
   }
 
   /* about */
@@ -331,14 +421,43 @@
     flex-direction: column;
     background: var(--card);
     border: 1px solid rgba(16,185,129,0.18);
-    border-radius: 12px;
+    border-radius: 0;
     overflow:hidden;
+    cursor: pointer;
     transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
   }
-  .project:hover{
+  .project:hover, .project:focus-visible{
     transform: translateY(-5px);
     box-shadow: 0 18px 40px rgba(0,0,0,0.55);
     border-color: rgba(16,185,129,0.55);
+  }
+  .project:focus-visible{ outline: 2px solid var(--forest); outline-offset: 2px; }
+  .view-details{
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--forest);
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity .2s ease, transform .2s ease;
+    margin-top: 4px;
+  }
+  .project:hover .view-details, .project:focus-visible .view-details{
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .card-slash{
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    line-height: 1;
+    color: rgba(16,185,129,0.35);
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 7px 10px;
+    border-bottom: 1px solid rgba(16,185,129,0.18);
+    background: rgba(5,11,8,0.5);
+    user-select: none;
   }
   .project-visual{
     aspect-ratio: 16 / 9;
@@ -382,7 +501,7 @@
     background: rgba(5,11,8,0.65);
     border: 1px solid rgba(16,185,129,0.4);
     padding: 4px 9px;
-    border-radius: 999px;
+    border-radius: 0;
     z-index: 2;
     backdrop-filter: blur(3px);
   }
@@ -461,33 +580,142 @@
     .about-body{ grid-template-columns: 1fr; }
   }
 
-  /* skills */
-  .skills-grid{
-    display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: 2px;
-    background: rgba(16,185,129,0.15);
-    border: 1px solid rgba(16,185,129,0.15);
-    border-radius: 8px;
-    overflow:hidden;
+  /* skills — numbered rows */
+  .skills-list{
+    border-top: 1px solid rgba(16,185,129,0.2);
   }
-  .skill-cell{
-    background: var(--card);
-    padding: 22px 20px;
+  .skill-row{
+    display:flex;
+    align-items: center;
+    gap: 22px;
+    padding: 20px 4px;
+    border-bottom: 1px solid rgba(16,185,129,0.15);
+    transition: padding-left .2s ease, background .2s ease;
   }
-  .skill-cell .k{
+  .skill-row:hover{
+    padding-left: 14px;
+    background: rgba(16,185,129,0.05);
+  }
+  .skill-num{
     font-family: var(--mono);
-    font-size: 0.66rem;
+    font-size: 0.85rem;
+    color: var(--forest);
+    width: 28px;
+    flex-shrink: 0;
+  }
+  .skill-name{
+    font-family: var(--display-bold);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(1rem, 2.2vw, 1.35rem);
+    color: var(--ink);
+    flex: 1;
+  }
+  .skill-k{
+    font-family: var(--mono);
+    font-size: 0.68rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+    color: var(--moss);
+    border: 1px solid rgba(16,185,129,0.3);
+    padding: 4px 10px;
+    border-radius: 999px;
+    flex-shrink: 0;
+  }
+  @media (max-width: 560px){
+    .skill-k{ display:none; }
+  }
+
+  /* ---------- GAME DETAIL MODAL (Steam-style) ---------- */
+  .modal-overlay{
+    display:none;
+    position: fixed; inset:0;
+    background: rgba(2,5,4,0.88);
+    backdrop-filter: blur(6px);
+    align-items:center; justify-content:center;
+    padding: 24px;
+    z-index: 300;
+  }
+  .modal-overlay.active{ display:flex; }
+  .modal-panel{
+    background: var(--card);
+    border: 1px solid rgba(16,185,129,0.35);
+    border-radius: 14px;
+    max-width: 760px;
+    width: 100%;
+    max-height: 88vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    animation: modal-pop .2s ease;
+  }
+  @keyframes modal-pop{
+    from{ opacity:0; transform: translateY(10px) scale(0.98); }
+    to{ opacity:1; transform: translateY(0) scale(1); }
+  }
+  .modal-close{
+    position:absolute; top:14px; right:14px;
+    z-index: 5;
+    background: rgba(5,11,8,0.75);
+    border: 1px solid rgba(16,185,129,0.4);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background .2s ease, border-color .2s ease;
+  }
+  .modal-close:hover{ background: rgba(16,185,129,0.2); border-color: var(--forest); }
+  .modal-hero{
+    position: relative;
+    aspect-ratio: 20 / 9;
+    width: 100%;
+    overflow: hidden;
+    display:flex; align-items:center; justify-content:center;
+    background: linear-gradient(160deg, #0F4A32, #050B08);
+  }
+  .modal-hero img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+  .modal-hero .game-index{ top:16px; left:16px; }
+  .modal-body{ padding: 26px 30px 34px; }
+  .modal-body .role-tag{
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     color: var(--amber);
   }
-  .skill-cell .v{
-    font-family: var(--body);
-    font-weight: 600;
-    font-size: 1rem;
-    margin-top: 6px;
+  .modal-body h2{
+    font-family: var(--display-bold);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(1.5rem, 4vw, 2.1rem);
     color: var(--ink);
+    margin-top: 8px;
+  }
+  .modal-body .genre{
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    color: var(--moss);
+    margin-top: 4px;
+  }
+  .modal-label{
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--forest);
+    margin-top: 24px;
+    margin-bottom: 8px;
+    border-top: 1px solid rgba(16,185,129,0.2);
+    padding-top: 20px;
+  }
+  .modal-desc{
+    font-size: 0.95rem;
+    line-height: 1.6;
+    opacity: 0.9;
   }
 
   /* contact */
@@ -557,8 +785,10 @@
       <li><a href="#skills">Skills</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
+    <span class="nav-status"><span class="dot"></span>Open to opportunities</span>
   </div>
 </nav>
+<div class="slash-rule" aria-hidden="true">////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////</div>
 
 <header class="hero" id="top">
   <div class="wrap hero-grid">
@@ -590,10 +820,17 @@
   </div>
 </header>
 
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>AUDIO DESIGN</span><span>2D ART &amp; TEXTURE</span><span>GAME DEVELOPMENT</span><span>BSEMC 2ND YEAR</span>
+    <span>AUDIO DESIGN</span><span>2D ART &amp; TEXTURE</span><span>GAME DEVELOPMENT</span><span>BSEMC 2ND YEAR</span>
+  </div>
+</div>
+
 <section id="about">
   <div class="wrap">
     <div class="section-head">
-      <h2>About</h2>
+      <h2><span class="num">01 /</span> About</h2>
       <span class="tag">Who's making this</span>
     </div>
     <div class="about-body">
@@ -614,20 +851,22 @@
 <section id="work">
   <div class="wrap">
     <div class="section-head">
-      <h2>Selected Work</h2>
+      <h2><span class="num">02 /</span> Selected Work</h2>
       <span class="tag">5 Student Projects</span>
     </div>
 
     <div class="work-grid">
 
-      <!-- Project 1: Blessing in Disguise (Restored Placeholder) -->
-      <div class="project p1">
+      <!-- Project 01: Blessing in Disguise -->
+      <div class="project p1" tabindex="0" role="button" aria-label="View details for Blessing in Disguise" onclick="openModal('modal-p1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('modal-p1');}">
+        <div class="card-slash" aria-hidden="true">////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////</div>
         <div class="project-visual">
           <span class="game-index">GAME 01</span>
           <div class="glyph">🕯️</div>
           <div class="project-title-overlay">
             <h3>Blessing in Disguise</h3>
             <p class="genre">3D Hide-and-Seek Tag Game</p>
+            <p class="view-details">View details →</p>
           </div>
         </div>
         <div class="project-body">
@@ -639,14 +878,16 @@
         </div>
       </div>
 
-      <!-- Project 2: Pawfee Corner -->
-      <div class="project p2">
+      <!-- Project 02: Pawfee Corner -->
+      <div class="project p2" tabindex="0" role="button" aria-label="View details for Pawfee Corner" onclick="openModal('modal-p2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('modal-p2');}">
+        <div class="card-slash" aria-hidden="true">////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////</div>
         <div class="project-visual">
           <span class="game-index">GAME 02</span>
           <img src="images/pawfee-corner.png" alt="Pawfee Corner gameplay screenshot">
           <div class="project-title-overlay">
             <h3>Pawfee Corner</h3>
             <p class="genre">2D Idle Tycoon Clicker</p>
+            <p class="view-details">View details →</p>
           </div>
         </div>
         <div class="project-body">
@@ -658,14 +899,16 @@
         </div>
       </div>
 
-      <!-- Project 3: Absolute Cinema -->
-      <div class="project p3">
+      <!-- Project 03: Absolute Cinema -->
+      <div class="project p3" tabindex="0" role="button" aria-label="View details for Absolute Cinema" onclick="openModal('modal-p3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('modal-p3');}">
+        <div class="card-slash" aria-hidden="true">////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////</div>
         <div class="project-visual">
           <span class="game-index">GAME 03</span>
           <img src="images/absolute-cinema.png" alt="Absolute Cinema gameplay screenshot">
           <div class="project-title-overlay">
             <h3>Absolute Cinema</h3>
             <p class="genre">2.5D Top-Down Action — Mixed 2D/3D</p>
+            <p class="view-details">View details →</p>
           </div>
         </div>
         <div class="project-body">
@@ -677,14 +920,16 @@
         </div>
       </div>
 
-      <!-- Project 4: Scion of the Mask Keeper -->
-      <div class="project p4">
+      <!-- Project 04: Scion of the Mask Keeper -->
+      <div class="project p4" tabindex="0" role="button" aria-label="View details for Scion of the Mask Keeper" onclick="openModal('modal-p4')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('modal-p4');}">
+        <div class="card-slash" aria-hidden="true">////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////</div>
         <div class="project-visual">
           <span class="game-index">GAME 04</span>
           <img src="images/scion-of-the-mask-keeper.png" alt="Scion of the Mask Keeper gameplay screenshot">
           <div class="project-title-overlay">
             <h3>Scion of the Mask Keeper</h3>
             <p class="genre">3D/2D Shop Keeper Simulation</p>
+            <p class="view-details">View details →</p>
           </div>
         </div>
         <div class="project-body">
@@ -696,14 +941,16 @@
         </div>
       </div>
 
-      <!-- Project 5: Samsara -->
-      <div class="project p5">
+      <!-- Project 05: Samsara -->
+      <div class="project p5" tabindex="0" role="button" aria-label="View details for Samsara" onclick="openModal('modal-p5')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openModal('modal-p5');}">
+        <div class="card-slash" aria-hidden="true">////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////</div>
         <div class="project-visual">
           <span class="game-index">GAME 05</span>
           <img src="images/samsara.png" alt="Samsara gameplay screenshot">
           <div class="project-title-overlay">
             <h3>Samsara</h3>
             <p class="genre">Audio &amp; Atmospheric Design</p>
+            <p class="view-details">View details →</p>
           </div>
         </div>
         <div class="project-body">
@@ -719,19 +966,149 @@
   </div>
 </section>
 
+<div class="modal-overlay" id="modal-p1" onclick="if(event.target===this)closeModal('modal-p1')">
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-label="Blessing in Disguise details">
+    <button class="modal-close" onclick="closeModal('modal-p1')" aria-label="Close">[ X ]</button>
+    <div class="modal-hero">
+      <span class="game-index">GAME 01</span>
+      <div class="glyph" style="font-size:3.4rem;">🕯️</div><div class="placeholder-label">Work in Progress</div>
+    </div>
+    <div class="modal-body">
+      <span class="role-tag">Audio Design · UI · Programming</span>
+      <h2>Blessing in Disguise</h2>
+      <p class="genre">3D Hide-and-Seek Tag Game</p>
+      <p class="modal-label">About this project</p>
+      <p class="modal-desc">A curse-to-blessing chase built around a cursed mask and a Holy Well — players hunt or hide while the world quietly punishes or rewards them for it. Built as parallel physics and networking projects using Unity's Netcode for GameObjects.</p>
+      <p class="modal-label">Built with</p>
+      <div class="stack">
+        <span>Unity</span><span>Netcode for GameObjects</span><span>Physics</span><span>Sound Design</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-p2" onclick="if(event.target===this)closeModal('modal-p2')">
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-label="Pawfee Corner details">
+    <button class="modal-close" onclick="closeModal('modal-p2')" aria-label="Close">[ X ]</button>
+    <div class="modal-hero">
+      <span class="game-index">GAME 02</span>
+      <img src="images/pawfee-corner.png" alt="Pawfee Corner gameplay screenshot">
+    </div>
+    <div class="modal-body">
+      <span class="role-tag">Programming · Sound Design</span>
+      <h2>Pawfee Corner</h2>
+      <p class="genre">2D Idle Tycoon Clicker</p>
+      <p class="modal-label">About this project</p>
+      <p class="modal-desc">A cozy animal café economy game — currency systems, upgrade tiers, and daily rewards balanced from scratch. Stepped outside my usual art/audio lane to implement the core systems in code and design the game's sound.</p>
+      <p class="modal-label">Built with</p>
+      <div class="stack">
+        <span>Unity</span><span>C#</span><span>Economy Design</span><span>Sound Design</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-p3" onclick="if(event.target===this)closeModal('modal-p3')">
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-label="Absolute Cinema details">
+    <button class="modal-close" onclick="closeModal('modal-p3')" aria-label="Close">[ X ]</button>
+    <div class="modal-hero">
+      <span class="game-index">GAME 03</span>
+      <img src="images/absolute-cinema.png" alt="Absolute Cinema gameplay screenshot">
+    </div>
+    <div class="modal-body">
+      <span class="role-tag">Audio Design · 2D Texturing (3D Models)</span>
+      <h2>Absolute Cinema</h2>
+      <p class="genre">2.5D Top-Down Action — Mixed 2D/3D</p>
+      <p class="modal-label">About this project</p>
+      <p class="modal-desc">Players enter corrupted movie worlds, each reimagined as a distinct combat arena inspired by a different classic film genre, and defeat the antagonist restoring it. I handled the audio and the 2D textures applied to the 3D models across each world.</p>
+      <p class="modal-label">Built with</p>
+      <div class="stack">
+        <span>Unity</span><span>2.5D</span><span>Texturing</span><span>Sound Design</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-p4" onclick="if(event.target===this)closeModal('modal-p4')">
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-label="Scion of the Mask Keeper details">
+    <button class="modal-close" onclick="closeModal('modal-p4')" aria-label="Close">[ X ]</button>
+    <div class="modal-hero">
+      <span class="game-index">GAME 04</span>
+      <img src="images/scion-of-the-mask-keeper.png" alt="Scion of the Mask Keeper gameplay screenshot">
+    </div>
+    <div class="modal-body">
+      <span class="role-tag">3D Texturing · Sound Design</span>
+      <h2>Scion of the Mask Keeper</h2>
+      <p class="genre">3D/2D Shop Keeper Simulation</p>
+      <p class="modal-label">About this project</p>
+      <p class="modal-desc">After finding a strange mask in your late grandfather's belongings, you are transported to an otherworld of faceless spirits. As a Mask Artisan, craft and match masks to spirit moods to collect spirit essence, prevent corruption, and maintain your sanity to escape.</p>
+      <p class="modal-label">Built with</p>
+      <div class="stack">
+        <span>Unity</span><span>3D Texturing</span><span>Sound Design</span><span>Atmospheric Design</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-p5" onclick="if(event.target===this)closeModal('modal-p5')">
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-label="Samsara details">
+    <button class="modal-close" onclick="closeModal('modal-p5')" aria-label="Close">[ X ]</button>
+    <div class="modal-hero">
+      <span class="game-index">GAME 05</span>
+      <img src="images/samsara.png" alt="Samsara gameplay screenshot">
+    </div>
+    <div class="modal-body">
+      <span class="role-tag">Sound Design</span>
+      <h2>Samsara</h2>
+      <p class="genre">Audio &amp; Atmospheric Design</p>
+      <p class="modal-label">About this project</p>
+      <p class="modal-desc">A sound-driven experience focused on building tone, impact, and immersion through specialized sound design and dynamic audio implementation.</p>
+      <p class="modal-label">Built with</p>
+      <div class="stack">
+        <span>Sound Design</span><span>Audio Implementation</span><span>Atmospheric Audio</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <section id="skills">
   <div class="wrap">
     <div class="section-head">
-      <h2>Skills</h2>
+      <h2><span class="num">03 /</span> Skills</h2>
       <span class="tag">Tools &amp; Focus Areas</span>
     </div>
-    <div class="skills-grid">
-      <div class="skill-cell"><div class="k">Core</div><div class="v">Audio Design &amp; Implementation</div></div>
-      <div class="skill-cell"><div class="k">Core</div><div class="v">2D Art &amp; Texturing</div></div>
-      <div class="skill-cell"><div class="k">Engine</div><div class="v">Unity</div></div>
-      <div class="skill-cell"><div class="k">Networking</div><div class="v">Netcode for GameObjects</div></div>
-      <div class="skill-cell"><div class="k">Scripting</div><div class="v">C#</div></div>
-      <div class="skill-cell"><div class="k">3D Support</div><div class="v">Texturing for 3D Models</div></div>
+    <div class="skills-list">
+      <div class="skill-row">
+        <span class="skill-num">01</span>
+        <span class="skill-name">Audio Design &amp; Implementation</span>
+        <span class="skill-k">Core</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-num">02</span>
+        <span class="skill-name">2D Art &amp; Texturing</span>
+        <span class="skill-k">Core</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-num">03</span>
+        <span class="skill-name">Unity</span>
+        <span class="skill-k">Engine</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-num">04</span>
+        <span class="skill-name">Netcode for GameObjects</span>
+        <span class="skill-k">Networking</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-num">05</span>
+        <span class="skill-name">C#</span>
+        <span class="skill-k">Scripting</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-num">06</span>
+        <span class="skill-name">Texturing for 3D Models</span>
+        <span class="skill-k">3D Support</span>
+      </div>
     </div>
   </div>
 </section>
@@ -768,5 +1145,27 @@
   </div>
 </footer>
 
+<script>
+  function openModal(id){
+    var m = document.getElementById(id);
+    if(!m) return;
+    m.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id){
+    var m = document.getElementById(id);
+    if(!m) return;
+    m.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      document.querySelectorAll('.modal-overlay.active').forEach(function(m){
+        m.classList.remove('active');
+      });
+      document.body.style.overflow = '';
+    }
+  });
+</script>
 </body>
 </html>
